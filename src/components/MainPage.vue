@@ -1,15 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const player = ref('X')
-const board = ref([
+type BoardType = string[][]
+
+const player = ref<string>('X')
+const board = ref<BoardType>([
   ['', '', ''],
   ['', '', ''],
   ['', '', ''],
 ])
 
-const calculateWinner = (squares) => {
-  const lines = [
+const calculateWinner = (squares: string[]) => {
+  const lines: number[][] = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -28,9 +30,9 @@ const calculateWinner = (squares) => {
   return null
 }
 
-const winner = computed(() => calculateWinner(board.value.flat()))
+const winner = computed(() => calculateWinner((board.value as any).flat()))
 
-const makeMove = (x, y) => {
+const makeMove = (x: number, y: number) => {
   if (winner.value) return
   if (board.value[x][y] !== '') return
   board.value[x][y] = player.value
